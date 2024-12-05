@@ -11,7 +11,7 @@ public class Main {
     // Database connection parameters
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/hospital";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "your_db_password";
+    private static final String DB_PASSWORD = "nuggets12";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -49,10 +49,10 @@ public class Main {
     private static void accessAdminFeatures(Connection connection) {
         try (Statement stmt = connection.createStatement()) {
             System.out.println("Fetching all users...");
-            ResultSet rs = stmt.executeQuery("SELECT * FROM users;"); // Example query for admins
+            ResultSet rs = stmt.executeQuery("SELECT * FROM patient;"); // Example query for admins
 
             while (rs.next()) {
-                System.out.println("User: " + rs.getString("username"));
+                System.out.println("Patient: " + rs.getString("p_name"));
             }
         } catch (Exception e) {
             System.err.println("Error fetching admin data: " + e.getMessage());
