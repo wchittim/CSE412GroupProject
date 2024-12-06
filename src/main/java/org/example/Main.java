@@ -108,6 +108,31 @@ public class Main {
             while (rs.next()) {
                 System.out.println("Patient: " + rs.getString("name"));
             }
+
+            System.out.println("\n\nFetching all records data...");
+            rs = stmt.executeQuery("SELECT * FROM records;");
+
+            while (rs.next()) {
+                System.out.println("\nPatientID: " + rs.getString("patientid") + "  Patient Info: "
+                        + rs.getString ("patientinfo"));
+            }
+
+            System.out.println("\n\nFetching all Location data...");
+            rs = stmt.executeQuery("SELECT * FROM location;");
+
+            while (rs.next()) {
+                System.out.println("\nAddress: " + rs.getString("address") + "  Number of Rooms: "
+                        + rs.getString ("numberofrooms"));
+            }
+            
+            System.out.println("\n\nFetching all room data...");
+            rs = stmt.executeQuery("SELECT * FROM room;");
+
+            while (rs.next()) {
+                System.out.println("\nRoom Number: " + rs.getString("roomnumber") + "  Vacancy: "
+                        + rs.getString ("vacancy") + "  Floor: " + rs.getString("floor"));
+            }
+            
         } catch (Exception e) {
             System.err.println("Error fetching doctor data: " + e.getMessage());
         }
