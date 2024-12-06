@@ -102,14 +102,14 @@ public class Main {
     // Doctor-specific functionality
     private static void accessDoctorFeatures(Connection connection) {
         try (Statement stmt = connection.createStatement()) {
-            System.out.println("Fetching patient data...");
-            ResultSet rs = stmt.executeQuery("SELECT * FROM patients WHERE assigned_doctor = 'doctor';"); // Example query for doctors
+            System.out.println("\n\nFetching Patient data...\n");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM patient;"); // Example query for doctors
 
             while (rs.next()) {
-                System.out.println("Patient: " + rs.getString("name"));
+                System.out.println("Patient: " + rs.getString("p_name"));
             }
 
-            System.out.println("\n\nFetching all records data...");
+            System.out.println("\n\nFetching all Records data...");
             rs = stmt.executeQuery("SELECT * FROM records;");
 
             while (rs.next()) {
@@ -125,7 +125,7 @@ public class Main {
                         + rs.getString ("numberofrooms"));
             }
             
-            System.out.println("\n\nFetching all room data...");
+            System.out.println("\n\nFetching all Room data...");
             rs = stmt.executeQuery("SELECT * FROM room;");
 
             while (rs.next()) {
