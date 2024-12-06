@@ -48,18 +48,18 @@ public class Main {
     // Admin-specific functionality
     private static void accessAdminFeatures(Connection connection) {
         try (Statement stmt = connection.createStatement()) {
-            System.out.println("\nFetching all patients...\n");
+            System.out.println("\nFetching all Patients...\n");
             ResultSet rs = stmt.executeQuery("SELECT * FROM patient;"); // Example query for admins
 
             while (rs.next()) {
                 System.out.println("Patient: " + rs.getString("p_name"));
             }
 
-            System.out.println("\n\nFetching all billing data...");
+            System.out.println("\n\nFetching all Billing data...");
             rs = stmt.executeQuery("SELECT * FROM bill;");
 
             while (rs.next()) {
-                System.out.println("\nPatiendID: " + rs.getString( "patientid") + " Balance: $"
+                System.out.println("\nPatientID: " + rs.getString( "patientid") + " Balance: $"
                         + rs.getString("price"));
             }
 
@@ -71,7 +71,7 @@ public class Main {
                         + rs.getString ("numberofrooms"));
             }
 
-            System.out.println("\n\nFetching all records data...");
+            System.out.println("\n\nFetching all Records data...");
             rs = stmt.executeQuery("SELECT * FROM records;");
 
             while (rs.next()) {
@@ -79,7 +79,7 @@ public class Main {
                         + rs.getString ("patientinfo"));
             }
 
-            System.out.println("\n\nFetching all room data...");
+            System.out.println("\n\nFetching all Room data...");
             rs = stmt.executeQuery("SELECT * FROM room;");
 
             while (rs.next()) {
@@ -92,7 +92,7 @@ public class Main {
 
             while (rs.next()) {
                 System.out.println("\nName: " + rs.getString("s_name") + "      Position: "
-                        + rs.getString ("position") + "     Salary: " + rs.getString("salary"));
+                        + rs.getString ("position") + "     Salary: $" + rs.getString("salary"));
             }
         } catch (Exception e) {
             System.err.println("Error fetching admin data: " + e.getMessage());
