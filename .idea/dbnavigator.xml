@@ -25,6 +25,11 @@
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files>
+      <object connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" object-ref="schemas/public/tables/bill" />
+      <object connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" object-ref="schemas/public/tables/staff" />
+      <object connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" object-ref="schemas/public/tables/records" />
+      <object connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" object-ref="schemas/public/tables/location" />
+      <object connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" object-ref="schemas/public/tables/room" />
       <object connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" object-ref="schemas/public/tables/patient" />
     </open-files>
   </component>
@@ -32,14 +37,14 @@
     <connection id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" dataset="public.staff" active-filter-id="">
+    <filter-actions connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" dataset="public.staff" active-filter-id="EMPTY_FILTER">
       <filter id="45ff6f21-c3a3-4e66-a09c-32d4fb1c231f" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="employeeid" operator="=" value="" active="true" />
       </filter>
     </filter-actions>
     <filter-actions connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" dataset="public.patient" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" dataset="public.records" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" dataset="public.bill" active-filter-id="">
+    <filter-actions connection-id="fdbc3a94-d3aa-4ffc-8adb-2a2495ab327d" dataset="public.bill" active-filter-id="EMPTY_FILTER">
       <filter id="922180e0-7705-45d6-ae8f-307250b37916" name="Filter" temporary="false" custom-name="false" type="basic" join-type="AND">
         <condition column="billnumber" operator="=" value="" active="true" />
       </filter>

@@ -48,11 +48,51 @@ public class Main {
     // Admin-specific functionality
     private static void accessAdminFeatures(Connection connection) {
         try (Statement stmt = connection.createStatement()) {
-            System.out.println("Fetching all users...");
+            System.out.println("\nFetching all patients...\n");
             ResultSet rs = stmt.executeQuery("SELECT * FROM patient;"); // Example query for admins
 
             while (rs.next()) {
                 System.out.println("Patient: " + rs.getString("p_name"));
+            }
+
+            System.out.println("\n\nFetching all billing data...");
+            rs = stmt.executeQuery("SELECT * FROM bill;");
+
+            while (rs.next()) {
+                System.out.println("\nPatiendID: " + rs.getString( "patientid") + " Balance: $"
+                        + rs.getString("price"));
+            }
+
+            System.out.println("\n\nFetching all Location data...");
+            rs = stmt.executeQuery("SELECT * FROM location;");
+
+            while (rs.next()) {
+                System.out.println("\nAddress: " + rs.getString("address") + "  Number of Rooms: "
+                        + rs.getString ("numberofrooms"));
+            }
+
+            System.out.println("\n\nFetching all records data...");
+            rs = stmt.executeQuery("SELECT * FROM records;");
+
+            while (rs.next()) {
+                System.out.println("\nPatientID: " + rs.getString("patientid") + "  Patient Info: "
+                        + rs.getString ("patientinfo"));
+            }
+
+            System.out.println("\n\nFetching all room data...");
+            rs = stmt.executeQuery("SELECT * FROM room;");
+
+            while (rs.next()) {
+                System.out.println("\nRoom Number: " + rs.getString("roomnumber") + "  Vacancy: "
+                        + rs.getString ("vacancy") + "  Floor: " + rs.getString("floor"));
+            }
+
+            System.out.println("\n\nFetching all Staff data...");
+            rs = stmt.executeQuery("SELECT * FROM staff;");
+
+            while (rs.next()) {
+                System.out.println("\nName: " + rs.getString("s_name") + "      Position: "
+                        + rs.getString ("position") + "     Salary: " + rs.getString("salary"));
             }
         } catch (Exception e) {
             System.err.println("Error fetching admin data: " + e.getMessage());
