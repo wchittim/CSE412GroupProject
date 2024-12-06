@@ -11,7 +11,7 @@ public class Main {
     // Database connection parameters
     private static final String DB_URL = "jdbc:postgresql://localhost:5432/hospital";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "nuggets12";
+    private static final String DB_PASSWORD = "qwedcxzas";
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -30,10 +30,10 @@ public class Main {
             try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
                 if (username.equals("admin")) {
                     System.out.println("Accessing admin privileges...");
-                    accessAdminFeatures(connection);
+                    showMenuAndHandleInput(connection, "admin");
                 } else if (username.equals("doctor")) {
                     System.out.println("Accessing doctor privileges...");
-                    accessDoctorFeatures(connection);
+                    showMenuAndHandleInput(connection, "doctor");
                 }
             } catch (Exception e) {
                 System.err.println("Database error: " + e.getMessage());
@@ -45,96 +45,61 @@ public class Main {
         scanner.close();
     }
 
-    // Admin-specific functionality
-    private static void accessAdminFeatures(Connection connection) {
-        try (Statement stmt = connection.createStatement()) {
-            System.out.println("\nFetching all Patients...\n");
-            ResultSet rs = stmt.executeQuery("SELECT * FROM patient;"); // Example query for admins
+    private static void showMenuAndHandleInput(Connection connection, String role) {
+        Scanner scanner = new Scanner(System.in);
+        String[] tables;
 
-            while (rs.next()) {
-                System.out.println("Patient: " + rs.getString("p_name"));
+        if (role.equals("admin")) {
+            tables = new String[]{"patient", "bill", "location", "records", "room", "staff"};
+        } else { // doctor
+            tables = new String[]{"patient", "records", "location", "room"};
+        }
+
+        while (true) {
+            System.out.println("\nAvailable tables:");
+            for (String table : tables) {
+                System.out.println("- " + table);
+            }
+            System.out.println("Type a table name to view its data, or type 'exit' to log out:");
+
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("exit")) {
+                System.out.println("Logging out...");
+                break;
             }
 
-            System.out.println("\n\nFetching all Billing data...");
-            rs = stmt.executeQuery("SELECT * FROM bill;");
-
-            while (rs.next()) {
-                System.out.println("\nPatientID: " + rs.getString( "patientid") + " Balance: $"
-                        + rs.getString("price"));
+            boolean validTable = false;
+            for (String table : tables) {
+                if (table.equalsIgnoreCase(input)) {
+                    validTable = true;
+                    displayTableData(connection, table);
+                    break;
+                }
             }
 
-            System.out.println("\n\nFetching all Location data...");
-            rs = stmt.executeQuery("SELECT * FROM location;");
-
-            while (rs.next()) {
-                System.out.println("\nAddress: " + rs.getString("address") + "  Number of Rooms: "
-                        + rs.getString ("numberofrooms"));
+            if (!validTable) {
+                System.out.println("Invalid table name. Please try again.");
             }
-
-            System.out.println("\n\nFetching all Records data...");
-            rs = stmt.executeQuery("SELECT * FROM records;");
-
-            while (rs.next()) {
-                System.out.println("\nPatientID: " + rs.getString("patientid") + "  Patient Info: "
-                        + rs.getString ("patientinfo"));
-            }
-
-            System.out.println("\n\nFetching all Room data...");
-            rs = stmt.executeQuery("SELECT * FROM room;");
-
-            while (rs.next()) {
-                System.out.println("\nRoom Number: " + rs.getString("roomnumber") + "  Vacancy: "
-                        + rs.getString ("vacancy") + "  Floor: " + rs.getString("floor"));
-            }
-
-            System.out.println("\n\nFetching all Staff data...");
-            rs = stmt.executeQuery("SELECT * FROM staff;");
-
-            while (rs.next()) {
-                System.out.println("\nName: " + rs.getString("s_name") + "      Position: "
-                        + rs.getString ("position") + "     Salary: $" + rs.getString("salary"));
-            }
-        } catch (Exception e) {
-            System.err.println("Error fetching admin data: " + e.getMessage());
         }
     }
 
-    // Doctor-specific functionality
-    private static void accessDoctorFeatures(Connection connection) {
+    private static void displayTableData(Connection connection, String tableName) {
         try (Statement stmt = connection.createStatement()) {
-            System.out.println("\n\nFetching Patient data...\n");
-            ResultSet rs = stmt.executeQuery("SELECT * FROM patient;"); // Example query for doctors
+            System.out.println("\nFetching data from " + tableName + " table...");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName + ";");
+
+            int columnCount = rs.getMetaData().getColumnCount();
 
             while (rs.next()) {
-                System.out.println("Patient: " + rs.getString("p_name"));
+                for (int i = 1; i <= columnCount; i++) {
+                    System.out.print(rs.getMetaData().getColumnName(i) + ": " + rs.getString(i) + "  ");
+                }
+                System.out.println();
             }
 
-            System.out.println("\n\nFetching all Records data...");
-            rs = stmt.executeQuery("SELECT * FROM records;");
-
-            while (rs.next()) {
-                System.out.println("\nPatientID: " + rs.getString("patientid") + "  Patient Info: "
-                        + rs.getString ("patientinfo"));
-            }
-
-            System.out.println("\n\nFetching all Location data...");
-            rs = stmt.executeQuery("SELECT * FROM location;");
-
-            while (rs.next()) {
-                System.out.println("\nAddress: " + rs.getString("address") + "  Number of Rooms: "
-                        + rs.getString ("numberofrooms"));
-            }
-            
-            System.out.println("\n\nFetching all Room data...");
-            rs = stmt.executeQuery("SELECT * FROM room;");
-
-            while (rs.next()) {
-                System.out.println("\nRoom Number: " + rs.getString("roomnumber") + "  Vacancy: "
-                        + rs.getString ("vacancy") + "  Floor: " + rs.getString("floor"));
-            }
-            
         } catch (Exception e) {
-            System.err.println("Error fetching doctor data: " + e.getMessage());
+            System.err.println("Error fetching data from " + tableName + ": " + e.getMessage());
         }
     }
 }
